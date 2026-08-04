@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Regular Application</title>
+    <link rel="icon" type="image/png" href="images/loogoo.png">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f8;
+            margin: 0;
+        }
+
+        header {
+            background: #cb0404;
+            color: #fff;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 25px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        h2 {
+            color: #cb0404;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 6px;
+        }
+
+        .attach {
+            border: 2px dashed #bbb;
+            padding: 18px;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .attach div {
+            margin-bottom: 16px;
+        }
+
+        .attach div:last-child {
+            margin-bottom: 0;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        button,
+        a.btn {
+            display: inline-block;
+            padding: 12px 22px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        .submit {
+            background: #cb0404;
+            color: #fff;
+        }
+
+        .reset {
+            background: #777;
+            color: #fff;
+        }
+
+        .home {
+            background: #0d6efd;
+            color: #fff;
+        }
+
+        /* --- Modal Popup Styling --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 650px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .modal-header h2 {
+            color: #28a745;
+            margin: 0;
+            border: none;
+            font-size: 24px;
+        }
+
+        .summary-section {
+            margin-bottom: 15px;
+        }
+
+        .summary-section h3 {
+            color: #cb0404;
+            font-size: 15px;
+            margin: 10px 0 5px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 15px;
+            font-size: 13px;
+        }
+
+        .summary-item {
+            word-break: break-word;
+        }
+
+        .summary-item strong {
+            color: #333;
+        }
+
+        .close-btn {
+            background: #28a745;
+            color: #fff;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        @media(max-width:768px) {
+
+            .grid,
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>PLDT Northgem - Regular Application</h1>
+    </header>
+    <div class="container">
+        <form id="appForm">
+            <h2>Subscription</h2>
+            <div class="grid">
+                <div>
+                    <label>Plan</label>
+                    <select id="plan" required>
+                        <option value="">--Select Plan--</option>
+                        <option>Fiber Plan 999</option>
+                        <option>Fiber Unli Plan 1299</option>
+                        <option>Fiber Unli Plan 1699</option>
+                        <option>Fiber Unli Plan 2099</option>
+                        <option>Fiber Unli All Plan 1499</option>
+                        <option>Fiber Unli All Plan 1899</option>
+                        <option>Fiber Unli All Plan 2599</option>
+                        <option>Fiber Netflix Plan 1599</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Agent Name</label>
+                    <input id="agentName" required>
+                </div>
+            </div>
+
+            <h2>Personal Information</h2>
+            <div class="grid">
+                <div><label>Last Name</label><input id="lastName" required></div>
+                <div><label>First Name</label><input id="firstName" required></div>
+                <div><label>Middle Name</label><input id="middleName"></div>
+                <div><label>Birthday</label><input id="birthday" type="date" required></div>
+                <div><label>ID Type</label>
+                    <select id="idType" required>
+                        <option value="">Select ID</option>
+
+                        <optgroup label="Primary IDs">
+                            <option>National ID</option>
+                            <option>Driver's License</option>
+                            <option>Passport</option>
+                            <option>UMID</option>
+                            <option>Digitized PhilHealth ID</option>
+                            <option>SSS</option>
+                            <option>Digitized Postal ID</option>
+                            <option>PRC ID</option>
+                        </optgroup>
+
+                        <optgroup label="Secondary IDs">
+                            <option>Voter's ID</option>
+                            <option>Non-digitized Postal ID</option>
+                            <option>Non-digitized PhilHealth ID</option>
+                            <option>TIN with Photo</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div><label>ID Number</label><input id="idNumber" required></div>
+            </div>
+
+            <h2>Contact Information</h2>
+            <div class="grid">
+                <div><label>Primary Contact Number *</label><input id="primaryContact" type="tel" required
+                        placeholder="09XXXXXXXXX"></div>
+                <div><label>Secondary Contact Number</label><input id="secondaryContact" type="tel"
+                        placeholder="09XXXXXXXXX"></div>
+                <div class="full"><label>Email Address *</label><input id="email" type="email" required
+                        placeholder="example@email.com"></div>
+            </div>
+
+            <h2>Service Address</h2>
+            <div class="grid">
+                <div class="full">
+                    <label>House Number / Street / Subdivision</label>
+                    <input id="address" required>
+                </div>
+                <div><label>Barangay</label><input id="barangay" required></div>
+                <div><label>City / Municipality</label><input id="city" required></div>
+                <div class="full"><label>Province</label><input id="province" required></div>
+                <div class="full">
+                    <label>Landmark/Time availability</label>
+                    <textarea id="landmark" rows="3" placeholder="Enter landmark details..."></textarea>
+                </div>
+            </div>
+
+            <h2>Attachments</h2>
+            <div class="attach">
+                <div>
+                    <label>Valid ID (At least 2 files: Front ID & Selfie. Max 3 files: Front, Back & Selfie)</label>
+                    <input id="idUpload" type="file" accept=".jpg,.jpeg,.png,.pdf" multiple required>
+                </div>
+                <div>
+                    <label>Supporting Documents (CIS, Subcert, Cignal Consent, etc.)</label>
+                    <input id="supportUpload" type="file" accept=".jpg,.jpeg,.png,.pdf" multiple required>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <a class="btn home" href="index.html">Back to Home</a>
+                <button class="submit" type="submit">Submit Application</button>
+                <button class="reset" type="reset">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Summary Modal Popup -->
+    <div id="summaryModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Submitted!</h2>
+                <p style="margin: 5px 0 0 0; color: #555;">Application successfully submitted.</p>
+            </div>
+
+            <div id="summaryDetails">
+                <!-- Data dynamically inserted here -->
+            </div>
+
+            <button class="close-btn" onclick="closeSummaryModal()">Done / Close</button>
+        </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynHHA0VYmn0xg3dSd0PMzY3B3rv6zGptVTxcNMSqeGKiZoeHnLO1Fe077hv1C-Ce4H/exec';
+
+        // File count validation for Valid ID input
+        document.getElementById('idUpload').addEventListener('change', function () {
+            const fileCount = this.files.length;
+            if (fileCount < 2 || fileCount > 3) {
+                alert('Please upload between 2 and 3 files (At least Front ID and Selfie, maximum of 3 files).');
+                this.value = '';
+            }
+        });
+
+        // Convert file object to Base64 data URL
+        const fileToBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve({ name: file.name, data: reader.result });
+            reader.onerror = error => reject(error);
+        });
+
+        // Display summary modal with uppercase values except email
+        function showSummaryModal(data) {
+            const container = document.getElementById('summaryDetails');
+            const toUpper = str => str ? String(str).toUpperCase() : 'N/A';
+
+            container.innerHTML = `
+                <div class="summary-section">
+                    <h3>Subscription Details</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item"><strong>Plan:</strong> ${toUpper(data.plan)}</div>
+                        <div class="summary-item"><strong>Agent Name:</strong> ${toUpper(data.agentName)}</div>
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h3>Personal Details</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item"><strong>Full Name:</strong> ${toUpper(data.lastName)}, ${toUpper(data.firstName)} ${toUpper(data.middleName)}</div>
+                        <div class="summary-item"><strong>Birthday:</strong> ${data.birthday || 'N/A'}</div>
+                        <div class="summary-item"><strong>ID Type:</strong> ${toUpper(data.idType)}</div>
+                        <div class="summary-item"><strong>ID Number:</strong> ${toUpper(data.idNumber)}</div>
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h3>Contact Details</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item"><strong>Primary Contact:</strong> ${data.primaryContact || 'N/A'}</div>
+                        <div class="summary-item"><strong>Secondary Contact:</strong> ${data.secondaryContact || 'N/A'}</div>
+                        <div class="summary-item" style="grid-column: 1 / -1;"><strong>Email:</strong> ${(data.email || 'N/A').toLowerCase()}</div>
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h3>Service Address</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item" style="grid-column: 1 / -1;"><strong>Street/Address:</strong> ${toUpper(data.address)}</div>
+                        <div class="summary-item"><strong>Barangay:</strong> ${toUpper(data.barangay)}</div>
+                        <div class="summary-item"><strong>City:</strong> ${toUpper(data.city)}</div>
+                        <div class="summary-item"><strong>Province:</strong> ${toUpper(data.province)}</div>
+                        <div class="summary-item" style="grid-column: 1 / -1;"><strong>Landmark:</strong> ${toUpper(data.landmark)}</div>
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h3>Attachments</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item"><strong>ID Files:</strong> ${data.idFiles.length} file(s) attached</div>
+                        <div class="summary-item"><strong>Supporting Files:</strong> ${data.supportFiles.length} file(s) attached</div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('summaryModal').style.display = 'flex';
+        }
+
+        // Close summary modal and reset form
+        function closeSummaryModal() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.getElementById('appForm').reset();
+        }
+
+        // Submit listener to process data and send to Apps Script
+        document.getElementById('appForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const submitBtn = document.querySelector('.submit');
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Processing & Submitting...';
+
+            try {
+                const idFileInput = document.getElementById('idUpload');
+                const supportFileInput = document.getElementById('supportUpload');
+
+                const idFiles = await Promise.all(Array.from(idFileInput.files).map(fileToBase64));
+                const supportFiles = await Promise.all(Array.from(supportFileInput.files).map(fileToBase64));
+
+                const formData = {
+                    plan: document.getElementById('plan').value,
+                    agentName: document.getElementById('agentName').value,
+                    lastName: document.getElementById('lastName').value,
+                    firstName: document.getElementById('firstName').value,
+                    middleName: document.getElementById('middleName').value,
+                    birthday: document.getElementById('birthday').value,
+                    idType: document.getElementById('idType').value,
+                    idNumber: document.getElementById('idNumber').value,
+                    primaryContact: document.getElementById('primaryContact').value,
+                    secondaryContact: document.getElementById('secondaryContact').value,
+                    email: document.getElementById('email').value,
+                    address: document.getElementById('address').value,
+                    barangay: document.getElementById('barangay').value,
+                    city: document.getElementById('city').value,
+                    province: document.getElementById('province').value,
+                    landmark: document.getElementById('landmark').value,
+                    idFiles: idFiles,
+                    supportFiles: supportFiles
+                };
+
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (result.result === 'success') {
+                    showSummaryModal(formData);
+                } else {
+                    alert('Error submitting application: ' + result.error);
+                }
+            } catch (err) {
+                alert('An error occurred during submission: ' + err.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Submit Application';
+            }
+        });
+    </script>
+</body>
+
+</html>

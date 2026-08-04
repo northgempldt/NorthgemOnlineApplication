@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switcher Application</title>
+    <link rel="icon" type="image/png" href="images/loogoo.png">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f8;
+            margin: 0;
+        }
+
+        header {
+            background: #cb0404;
+            color: #fff;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 25px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        h2 {
+            color: #cb0404;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 6px;
+        }
+
+        .attach {
+            border: 2px dashed #bbb;
+            padding: 18px;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .attach div {
+            margin-bottom: 16px;
+        }
+
+        .attach div:last-child {
+            margin-bottom: 0;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .btn,
+        button {
+            display: inline-block;
+            padding: 12px 22px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 5px;
+            text-decoration: none;
+        }
+
+        .home {
+            background: #0d6efd;
+            color: #fff;
+        }
+
+        .submit {
+            background: #cb0404;
+            color: #fff;
+        }
+
+        .reset {
+            background: #777;
+            color: #fff;
+        }
+
+        @media(max-width:768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>PLDT Northgem - Switcher Application</h1>
+    </header>
+    <div class="container">
+        <form id="appForm">
+            <h2>Subscription Details</h2>
+            <div class="grid">
+                <div>
+                    <label>Plan</label>
+                    <select id="plan" required>
+                        <option value="">--Select Plan--</option>
+                        <option>Switcher-Fiber Unli Plan 1299</option>
+                        <option>Switcher-Fiber Unli Plan 1699</option>
+                        <option>Switcher-Fiber Unli Plan 2099</option>
+                        <option>Switcher-Fiber Unli All Plan 1499</option>
+                        <option>Switcher-Fiber Unli All Plan 1899</option>
+                        <option>Switcher-Fiber Unli All Plan 2599</option>
+                        <option>Switcher-Fiber Netflix Plan 1599</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Agent Name</label>
+                    <input id="agentName" required>
+                </div>
+            </div>
+
+            <h2>Personal Information</h2>
+            <div class="grid">
+                <div><label>Last Name</label><input id="lastName" required></div>
+                <div><label>First Name</label><input id="firstName" required></div>
+                <div><label>Middle Name</label><input id="middleName"></div>
+                <div><label>Birthday</label><input id="birthday" type="date" required></div>
+                <div><label>ID Type</label>
+                    <select id="idType" required>
+                        <option value="">Select ID</option>
+
+                        <optgroup label="Primary IDs">
+                            <option>National ID</option>
+                            <option>Driver's License</option>
+                            <option>Passport</option>
+                            <option>UMID</option>
+                            <option>Digitized PhilHealth ID</option>
+                            <option>SSS</option>
+                            <option>Digitized Postal ID</option>
+                            <option>PRC ID</option>
+                        </optgroup>
+
+                        <optgroup label="Secondary IDs">
+                            <option>Voter's ID</option>
+                            <option>Non-digitized Postal ID</option>
+                            <option>Non-digitized PhilHealth ID</option>
+                            <option>TIN with Photo</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div><label>ID Number</label><input id="idNumber" required></div>
+            </div>
+
+            <h2>Contact Information</h2>
+            <div class="grid">
+                <div><label>Primary Contact Number *</label><input id="primaryContact" type="tel" required placeholder="09XXXXXXXXX"></div>
+                <div><label>Secondary Contact Number</label><input id="secondaryContact" type="tel" placeholder="09XXXXXXXXX"></div>
+                <div class="full"><label>Email Address *</label><input id="email" type="email" required placeholder="example@email.com"></div>
+            </div>
+
+            <h2>Service Address</h2>
+            <div class="grid">
+                <div class="full">
+                    <label>House Number / Street / Subdivision</label>
+                    <input id="address" required>
+                </div>
+                <div><label>Barangay</label><input id="barangay" required></div>
+                <div><label>City / Municipality</label><input id="city" required></div>
+                <div class="full"><label>Province</label><input id="province" required></div>
+                <div class="full">
+                    <label>Landmark/Time Availability</label>
+                    <textarea id="landmark" placeholder="Enter landmark details..."></textarea>
+                </div>
+            </div>
+
+            <h2>Attachments</h2>
+            <div class="attach">
+                <div>
+                    <label>Valid ID & SOA Verification (Min 3 files: Front ID, Selfie w/ ID & Selfie w/ SOA. Max 4 files if including Back ID)</label>
+                    <input id="idUpload" type="file" accept=".jpg,.jpeg,.png,.pdf" multiple required>
+                </div>
+                <div>
+                    <label>Supporting Documents / Previous Provider Bill</label>
+                    <input id="supportUpload" type="file" accept=".jpg,.jpeg,.png,.pdf" multiple required>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <a class="btn home" href="index.html">Back to Home</a>
+                <button type="submit" class="submit">Submit Application</button>
+                <button type="reset" class="reset">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynHHA0VYmn0xg3dSd0PMzY3B3rv6zGptVTxcNMSqeGKiZoeHnLO1Fe077hv1C-Ce4H/exec'; // Replace with your Web App deployment URL
+
+        // File count validation for Switcher ID & SOA upload (3 to 4 files required)
+        document.getElementById('idUpload').addEventListener('change', function () {
+            const fileCount = this.files.length;
+            if (fileCount < 3 || fileCount > 4) {
+                alert('Please upload 3 to 4 files (At least Front ID, Selfie w/ ID, and Selfie w/ SOA. Maximum of 4 files).');
+                this.value = '';
+            }
+        });
+
+        // Convert file object to Base64 data URL
+        const fileToBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve({ name: file.name, data: reader.result });
+            reader.onerror = error => reject(error);
+        });
+
+        // Submit listener to process data and send to Apps Script
+        document.getElementById('appForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.querySelector('.submit');
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Processing & Submitting...';
+
+            try {
+                const idFileInput = document.getElementById('idUpload');
+                const supportFileInput = document.getElementById('supportUpload');
+
+                const idFiles = await Promise.all(Array.from(idFileInput.files).map(fileToBase64));
+                const supportFiles = await Promise.all(Array.from(supportFileInput.files).map(fileToBase64));
+
+                const formData = {
+                    plan: document.getElementById('plan').value,
+                    agentName: document.getElementById('agentName').value,
+                    lastName: document.getElementById('lastName').value,
+                    firstName: document.getElementById('firstName').value,
+                    middleName: document.getElementById('middleName').value,
+                    birthday: document.getElementById('birthday').value,
+                    idType: document.getElementById('idType').value,
+                    idNumber: document.getElementById('idNumber').value,
+                    primaryContact: document.getElementById('primaryContact').value,
+                    secondaryContact: document.getElementById('secondaryContact').value,
+                    email: document.getElementById('email').value,
+                    address: document.getElementById('address').value,
+                    barangay: document.getElementById('barangay').value,
+                    city: document.getElementById('city').value,
+                    province: document.getElementById('province').value,
+                    landmark: document.getElementById('landmark').value,
+                    idFiles: idFiles,
+                    supportFiles: supportFiles
+                };
+
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (result.result === 'success') {
+                    alert('Switcher application submitted successfully!');
+                    this.reset();
+                } else {
+                    alert('Error submitting application: ' + result.error);
+                }
+            } catch (err) {
+                alert('An error occurred during submission: ' + err.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Submit Application';
+            }
+        });
+    </script>
+</body>
+
+</html>

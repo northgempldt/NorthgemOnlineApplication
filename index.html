@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northgem Application Form</title>
+<link rel="icon" type="image/png" href="images/loogoo.png">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f5f7fa;
+    color:#333;
+}
+
+/* Navigation */
+nav{
+    background:#cb0404;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 8%;
+}
+
+nav h2{
+    letter-spacing:1px;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+}
+
+nav ul li{
+    margin-left:25px;
+}
+
+nav ul li a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    transition:.3s;
+}
+
+nav ul li a:hover{
+    color:#ffd43b;
+}
+
+/* Hero */
+.hero{
+    height:85vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    background:linear-gradient(rgba(253,13,13,.8),rgba(213,134,134,.8)),
+    url("https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80");
+    background-size:cover;
+    background-position:center;
+    color:white;
+}
+
+.hero-content{
+    max-width:700px;
+    padding:20px;
+}
+
+/* Logo */
+.hero-logo{
+    width:140px;
+    height:140px;
+    object-fit:contain;
+    background:white;
+    border-radius:50%;
+    padding:12px;
+    margin-bottom:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,.3);
+}
+
+.hero h1{
+    font-size:50px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:18px;
+    margin-bottom:30px;
+    line-height:1.6;
+}
+
+/* Buttons */
+
+.btn{
+    display:inline-block;
+    padding:14px 30px;
+    border-radius:6px;
+    text-decoration:none;
+    font-weight:bold;
+    margin:10px;
+    transition:.3s;
+}
+
+.btn-primary{
+    background:#ffc107;
+    color:#000;
+}
+
+.btn-primary:hover{
+    background:#ffca2c;
+}
+
+/* Features */
+
+.features{
+    padding:70px 8%;
+    text-align:center;
+}
+
+.features h2{
+    margin-bottom:40px;
+    font-size:35px;
+    color:#cb0404;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card h3{
+    color:#cb0404;
+    margin-bottom:15px;
+}
+
+/* CTA */
+
+.cta{
+    background:#cb0404;
+    color:white;
+    text-align:center;
+    padding:60px 20px;
+}
+
+.cta h2{
+    margin-bottom:20px;
+}
+
+.cta p{
+    margin-bottom:20px;
+}
+
+/* Footer */
+
+footer{
+    background:#222;
+    color:#ddd;
+    text-align:center;
+    padding:20px;
+}
+
+/* =======================
+   MODALS
+======================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    z-index:1000;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.6);
+    animation:fade .3s;
+}
+
+@keyframes fade{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+.modal-content{
+    background:white;
+    width:90%;
+    max-width:450px;
+    margin:6% auto;
+    border-radius:10px;
+    padding:30px;
+    position:relative;
+    animation:zoom .3s;
+}
+
+@keyframes zoom{
+from{
+transform:scale(.8);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.close{
+    position:absolute;
+    top:10px;
+    right:20px;
+    font-size:30px;
+    cursor:pointer;
+}
+
+.close:hover{
+    color:red;
+}
+
+.modal h2{
+    color:#cb0404;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.popup-btn{
+    display:block;
+    text-decoration:none;
+    background:#cb0404;
+    color:white;
+    margin:15px 0;
+    padding:15px;
+    border-radius:8px;
+    text-align:center;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.popup-btn:hover{
+    background:#980303;
+}
+
+.requirements-list{
+    margin-top:20px;
+}
+
+.requirements-list li{
+    margin:12px 0;
+    line-height:1.5;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+nav{
+    flex-direction:column;
+}
+
+nav ul{
+    margin-top:15px;
+}
+
+.hero{
+    height:auto;
+    padding:60px 20px;
+}
+
+.hero h1{
+    font-size:36px;
+}
+
+.hero-logo{
+    width:120px;
+    height:120px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+
+<h2>PLDT Northgem Application Portal</h2>
+
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="#" onclick="openRequirements()">Requirements</a></li>
+</ul>
+
+</nav>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<img src="images/logo.png" class="hero-logo">
+
+<h1>Online Application Form</h1>
+
+<p>
+Submit your application quickly and securely.
+Complete the form and upload the required documents.
+</p>
+
+<a href="#" class="btn btn-primary" onclick="openApplyModal()">Apply Now</a>
+
+</div>
+
+</section>
+
+<section class="features">
+
+<h2>Important Reminders!</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>📝 Application Form</h3>
+<p>
+Siguraduhing kumpleto ang mga detalye. Mangyaring i-double check ang lahat ng impormasyon bago isumite.
+</p>
+</div>
+
+<div class="card">
+<h3>📁 Upload Documents</h3>
+<p>
+I-upload ang lahat ng importanteng documents tulad ng Front & Back ID, Customer Information Sheet, Subcerts, Cignal Consent Form, at iba pa.
+</p>
+</div>
+
+<div class="card">
+<h3>📊 Submission</h3>
+<p>
+Ang application ay awtomatikong mapupunta sa monitoring system batay sa oras ng pagsusumite.
+</p>
+</div>
+
+<div class="card">
+<h3>🔒 BK Express</h3>
+<p>
+Kung BK Express ay ilagay ito sa landmark, halimbawa ay:
+<strong>BKEXPRESS_Malapit sa Jollibee</strong>.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="cta">
+
+<h2>Ready to Start?</h2>
+
+<p>Begin your online application today.</p>
+
+<a href="#" class="btn btn-primary" onclick="openApplyModal()">Start Application</a>
+
+</section>
+
+<footer>
+
+<p>
+© 2026 Northgem Marketing Application Form System. All Rights Reserved.
+</p>
+
+</footer>
+
+<!-- APPLY MODAL -->
+
+<div id="applyModal" class="modal">
+
+<div class="modal-content">
+
+<span class="close" onclick="closeApplyModal()">&times;</span>
+
+<h2>Select Application Type</h2>
+
+<a href="regular.html" class="popup-btn">Regular</a>
+
+<a href="switcher.html" class="popup-btn">Switcher</a>
+
+<!-- <a href="homebiz.html" class="popup-btn">HomeBiz</a> -->
+
+</div>
+
+</div>
+
+<!-- REQUIREMENTS MODAL -->
+
+<div id="requirementsModal" class="modal">
+
+<div class="modal-content">
+
+<span class="close" onclick="closeRequirements()">&times;</span>
+
+<h2>Application Requirements</h2>
+
+<ul class="requirements-list">
+
+<li>✅ Customer Information Sheet</li>
+
+<li>✅ Valid ID (Front, Back, & Selfie)</li>
+
+<li>✅ Subcerts</li>
+
+<li>✅ Cignal Consent Form (if with Cignal Cable)</li>
+
+<li>✅ Active Mobile Numbers</li>
+
+<li>✅ Complete Landmark</li>
+
+<li>✅ SOA (if Switcher + Selfie with SOA)</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<script>
+
+function openApplyModal(){
+    document.getElementById("applyModal").style.display="block";
+}
+
+function closeApplyModal(){
+    document.getElementById("applyModal").style.display="none";
+}
+
+function openRequirements(){
+    document.getElementById("requirementsModal").style.display="block";
+}
+
+function closeRequirements(){
+    document.getElementById("requirementsModal").style.display="none";
+}
+
+window.onclick=function(event){
+
+let apply=document.getElementById("applyModal");
+let req=document.getElementById("requirementsModal");
+
+if(event.target==apply){
+apply.style.display="none";
+}
+
+if(event.target==req){
+req.style.display="none";
+}
+
+}
+
+</script>
+
+</body>
+</html>
