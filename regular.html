@@ -257,32 +257,7 @@
             <div class="grid">
                 <div><label>Last Name</label><input id="lastName" required></div>
                 <div><label>First Name</label><input id="firstName" required></div>
-                <div><label>Middle Name</label><input id="middleName"></div>
-                <div><label>Birthday</label><input id="birthday" type="date" required></div>
-                <div><label>ID Type</label>
-                    <select id="idType" required>
-                        <option value="">Select ID</option>
-
-                        <optgroup label="Primary IDs">
-                            <option>National ID</option>
-                            <option>Driver's License</option>
-                            <option>Passport</option>
-                            <option>UMID</option>
-                            <option>Digitized PhilHealth ID</option>
-                            <option>SSS</option>
-                            <option>Digitized Postal ID</option>
-                            <option>PRC ID</option>
-                        </optgroup>
-
-                        <optgroup label="Secondary IDs">
-                            <option>Voter's ID</option>
-                            <option>Non-digitized Postal ID</option>
-                            <option>Non-digitized PhilHealth ID</option>
-                            <option>TIN with Photo</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <div><label>ID Number</label><input id="idNumber" required></div>
+                <div class="full"><label>Middle Name</label><input id="middleName"></div>
             </div>
 
             <h2>Complete Address</h2>
@@ -373,10 +348,7 @@
                 <div class="summary-section">
                     <h3>Personal Details</h3>
                     <div class="summary-grid">
-                        <div class="summary-item"><strong>Full Name:</strong> ${toUpper(data.lastName)}, ${toUpper(data.firstName)} ${toUpper(data.middleName)}</div>
-                        <div class="summary-item"><strong>Birthday:</strong> ${data.birthday || 'N/A'}</div>
-                        <div class="summary-item"><strong>ID Type:</strong> ${toUpper(data.idType)}</div>
-                        <div class="summary-item"><strong>ID Number:</strong> ${toUpper(data.idNumber)}</div>
+                        <div class="summary-item" style="grid-column: 1 / -1;"><strong>Full Name:</strong> ${toUpper(data.lastName)}, ${toUpper(data.firstName)} ${toUpper(data.middleName)}</div>
                     </div>
                 </div>
 
@@ -430,9 +402,6 @@
                     lastName: document.getElementById('lastName').value,
                     firstName: document.getElementById('firstName').value,
                     middleName: document.getElementById('middleName').value,
-                    birthday: document.getElementById('birthday').value,
-                    idType: document.getElementById('idType').value,
-                    idNumber: document.getElementById('idNumber').value,
                     address: document.getElementById('address').value,
                     barangay: document.getElementById('barangay').value,
                     city: document.getElementById('city').value,
@@ -442,7 +411,6 @@
                     supportFiles: supportFiles
                 };
 
-                // Added mode: 'no-cors' and removed response.json() to prevent browser CORS redirection errors
                 await fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -452,7 +420,6 @@
                     body: JSON.stringify(formData)
                 });
 
-                // Display summary popup directly on transmission
                 showSummaryModal(formData);
 
             } catch (err) {
