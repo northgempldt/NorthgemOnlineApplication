@@ -356,7 +356,7 @@
             reader.onerror = error => reject(error);
         });
 
-        // Display summary modal with uppercase values except email
+        // Display summary modal with uppercase values
         function showSummaryModal(data) {
             const container = document.getElementById('summaryDetails');
             const toUpper = str => str ? String(str).toUpperCase() : 'N/A';
@@ -377,15 +377,6 @@
                         <div class="summary-item"><strong>Birthday:</strong> ${data.birthday || 'N/A'}</div>
                         <div class="summary-item"><strong>ID Type:</strong> ${toUpper(data.idType)}</div>
                         <div class="summary-item"><strong>ID Number:</strong> ${toUpper(data.idNumber)}</div>
-                    </div>
-                </div>
-
-                <div class="summary-section">
-                    <h3>Contact Details</h3>
-                    <div class="summary-grid">
-                        <div class="summary-item"><strong>Primary Contact:</strong> ${data.primaryContact || 'N/A'}</div>
-                        <div class="summary-item"><strong>Secondary Contact:</strong> ${data.secondaryContact || 'N/A'}</div>
-                        <div class="summary-item" style="grid-column: 1 / -1;"><strong>Email:</strong> ${(data.email || 'N/A').toLowerCase()}</div>
                     </div>
                 </div>
 
@@ -442,9 +433,6 @@
                     birthday: document.getElementById('birthday').value,
                     idType: document.getElementById('idType').value,
                     idNumber: document.getElementById('idNumber').value,
-                    primaryContact: document.getElementById('primaryContact').value,
-                    secondaryContact: document.getElementById('secondaryContact').value,
-                    email: document.getElementById('email').value,
                     address: document.getElementById('address').value,
                     barangay: document.getElementById('barangay').value,
                     city: document.getElementById('city').value,
