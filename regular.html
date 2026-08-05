@@ -78,12 +78,47 @@
             background: #fafafa;
         }
 
-        .attach div {
-            margin-bottom: 16px;
+        .attach div.upload-group {
+            margin-bottom: 20px;
         }
 
-        .attach div:last-child {
+        .attach div.upload-group:last-child {
             margin-bottom: 0;
+        }
+
+        /* Stacked File List Styles */
+        .file-list {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 8px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .file-item span {
+            word-break: break-all;
+            padding-right: 10px;
+        }
+
+        .remove-file-btn {
+            background: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 12px;
+            line-height: 1;
         }
 
         .buttons {
@@ -278,13 +313,15 @@
 
             <h2>Attachments</h2>
             <div class="attach">
-                <div>
-                    <label>Valid ID (At least 2 files: Front ID & Selfie. Max 3 files: Front, Back & Selfie)</label>
-                    <input id="idUpload" type="file" accept=".jpg,.jpeg,.png,.pdf" multiple required>
+                <div class="upload-group">
+                    <label>Valid ID (Upload files 1 by 1 or multiple, unlimited stack)</label>
+                    <input id="idUpload" type="file" accept=".jpg,.jpeg,.png,.pdf" multiple>
+                    <div id="idFileList" class="file-list"></div>
                 </div>
-                <div>
+                <div class="upload-group">
                     <label>Supporting Documents (CIS, Subcert, Cignal Consent, etc.)</label>
-                    <input id="supportUpload" type="file" accept=".jpg,.jpeg,.png,.pdf" multiple required>
+                    <input id="supportUpload" type="file" accept=".jpg,.jpeg,.png,.pdf" multiple>
+                    <div id="supportFileList" class="file-list"></div>
                 </div>
             </div>
 
@@ -315,14 +352,58 @@
     <script>
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynHHA0VYmn0xg3dSd0PMzY3B3rv6zGptVTxcNMSqeGKiZoeHnLO1Fe077hv1C-Ce4H/exec';
 
-        // File count validation for Valid ID input
+        // Global arrays to stack accumulative file objects
+        let idFilesArray = [];
+        let supportFilesArray = [];
+
+        // File Selection Listener for ID Files Stack
         document.getElementById('idUpload').addEventListener('change', function () {
-            const fileCount = this.files.length;
-            if (fileCount < 2 || fileCount > 3) {
-                alert('Please upload between 2 and 3 files (At least Front ID and Selfie, maximum of 3 files).');
-                this.value = '';
-            }
+            Array.from(this.files).forEach(file => idFilesArray.push(file));
+            this.value = ''; // Reset input to allow selecting same file or adding more sequentially
+            renderFileList('idFileList', idFilesArray, removeIdFile);
         });
+
+        // File Selection Listener for Supporting Files Stack
+        document.getElementById('supportUpload').addEventListener('change', function () {
+            Array.from(this.files).forEach(file => supportFilesArray.push(file));
+            this.value = ''; // Reset input
+            renderFileList('supportFileList', supportFilesArray, removeSupportFile);
+        });
+
+        // Render stacked files UI list
+        function renderFileList(containerId, fileArray, removeCallback) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            fileArray.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                
+                const fileNameSpan = document.createElement('span');
+                fileNameSpan.textContent = `${index + 1}. ${file.name}`;
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'remove-file-btn';
+                removeBtn.innerHTML = '&#10005;';
+                removeBtn.onclick = () => removeCallback(index);
+
+                item.appendChild(fileNameSpan);
+                item.appendChild(removeBtn);
+                container.appendChild(item);
+            });
+        }
+
+        // Functions to remove individual files from stacks
+        function removeIdFile(index) {
+            idFilesArray.splice(index, 1);
+            renderFileList('idFileList', idFilesArray, removeIdFile);
+        }
+
+        function removeSupportFile(index) {
+            supportFilesArray.splice(index, 1);
+            renderFileList('supportFileList', supportFilesArray, removeSupportFile);
+        }
 
         // Convert file object to Base64 data URL
         const fileToBase64 = file => new Promise((resolve, reject) => {
@@ -332,7 +413,7 @@
             reader.onerror = error => reject(error);
         });
 
-        // Display summary modal with uppercase values
+        // Display summary modal
         function showSummaryModal(data) {
             const container = document.getElementById('summaryDetails');
             const toUpper = str => str ? String(str).toUpperCase() : 'N/A';
@@ -350,7 +431,7 @@
                     <h3>Personal Details</h3>
                     <div class="summary-grid">
                         <div class="summary-item" style="grid-column: 1 / -1;"><strong>Full Name:</strong> ${toUpper(data.lastName)}, ${toUpper(data.firstName)} ${toUpper(data.middleName)}</div>
-                        <div class="summary-item" style="grid-column: 1 / -1;"><strong>Email:</strong> ${toUpper(data.email)}</div>
+                        <div class="summary-item" style="grid-column: 1 / -1;"><strong>Email:</strong> ${data.email || 'N/A'}</div>
                     </div>
                 </div>
 
@@ -377,6 +458,14 @@
             document.getElementById('summaryModal').style.display = 'flex';
         }
 
+        // Reset form handling
+        document.getElementById('appForm').addEventListener('reset', function () {
+            idFilesArray = [];
+            supportFilesArray = [];
+            renderFileList('idFileList', idFilesArray, removeIdFile);
+            renderFileList('supportFileList', supportFilesArray, removeSupportFile);
+        });
+
         // Close summary modal and reset form
         function closeSummaryModal() {
             document.getElementById('summaryModal').style.display = 'none';
@@ -387,16 +476,23 @@
         document.getElementById('appForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
+            // Ensure at least 1 file per section is attached
+            if (idFilesArray.length === 0) {
+                alert('Please upload at least one Valid ID document.');
+                return;
+            }
+            if (supportFilesArray.length === 0) {
+                alert('Please upload at least one Supporting document.');
+                return;
+            }
+
             const submitBtn = document.querySelector('.submit');
             submitBtn.disabled = true;
             submitBtn.innerText = 'Processing & Submitting...';
 
             try {
-                const idFileInput = document.getElementById('idUpload');
-                const supportFileInput = document.getElementById('supportUpload');
-
-                const idFiles = await Promise.all(Array.from(idFileInput.files).map(fileToBase64));
-                const supportFiles = await Promise.all(Array.from(supportFileInput.files).map(fileToBase64));
+                const idFiles = await Promise.all(idFilesArray.map(fileToBase64));
+                const supportFiles = await Promise.all(supportFilesArray.map(fileToBase64));
 
                 const formData = {
                     plan: document.getElementById('plan').value,
