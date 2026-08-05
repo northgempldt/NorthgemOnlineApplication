@@ -313,12 +313,12 @@
             <h2>Attachments</h2>
             <div class="attach">
                 <div class="upload-group">
-                    <label>Valid ID & SOA (Upload Front ID, Back ID, Selfie with ID, and Selfie with SOA)</label>
+                    <label>Valid ID & SOA (Fornt ID, Back ID, Selfie with ID, and Selfie with SOA)</label>
                     <input id="idUpload" type="file" accept=".jpg,.jpeg,.png,.pdf" multiple>
                     <div id="idFileList" class="file-list"></div>
                 </div>
                 <div class="upload-group">
-                    <label>Supporting Documents and SOA</label>
+                    <label>Supporting Documents including SOA</label>
                     <input id="supportUpload" type="file" accept=".jpg,.jpeg,.png,.pdf" multiple>
                     <div id="supportFileList" class="file-list"></div>
                 </div>
@@ -355,20 +355,14 @@
         let idFilesArray = [];
         let supportFilesArray = [];
 
-        // File Selection Listener for ID Files Stack
+        // File Selection Listener for ID Files Stack (No length limits)
         document.getElementById('idUpload').addEventListener('change', function () {
-            Array.from(this.files).forEach(file => {
-                if (idFilesArray.length < 4) {
-                    idFilesArray.push(file);
-                } else {
-                    alert('Maximum 4 ID/SOA files allowed.');
-                }
-            });
+            Array.from(this.files).forEach(file => idFilesArray.push(file));
             this.value = ''; // Reset input to allow adding more sequentially
             renderFileList('idFileList', idFilesArray, removeIdFile);
         });
 
-        // File Selection Listener for Supporting Files Stack
+        // File Selection Listener for Supporting Files Stack (No length limits)
         document.getElementById('supportUpload').addEventListener('change', function () {
             Array.from(this.files).forEach(file => supportFilesArray.push(file));
             this.value = ''; // Reset input
@@ -480,17 +474,6 @@
         // Submit listener to process data and send to Apps Script
         document.getElementById('appForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-
-            // File count validation for Switcher ID & SOA upload (3 to 4 files required)
-            if (idFilesArray.length < 3 || idFilesArray.length > 4) {
-                alert('Please upload 3 to 4 files for ID & SOA Verification (Front ID, Selfie w/ ID, Selfie w/ SOA, and optional Back ID).');
-                return;
-            }
-
-            if (supportFilesArray.length === 0) {
-                alert('Please upload at least one Supporting Document/Previous Provider Bill.');
-                return;
-            }
 
             const submitBtn = document.querySelector('.submit');
             submitBtn.disabled = true;
