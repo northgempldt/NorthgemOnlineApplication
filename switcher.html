@@ -256,7 +256,8 @@
             <div class="grid">
                 <div><label>Last Name</label><input id="lastName" required></div>
                 <div><label>First Name</label><input id="firstName" required></div>
-                <div class="full"><label>Middle Name</label><input id="middleName"></div>
+                <div><label>Middle Name</label><input id="middleName"></div>
+                <div><label>Email Address</label><input id="email" type="email" required></div>
             </div>
 
             <h2>Complete Address</h2>
@@ -348,6 +349,7 @@
                     <h3>Personal Details</h3>
                     <div class="summary-grid">
                         <div class="summary-item" style="grid-column: 1 / -1;"><strong>Full Name:</strong> ${toUpper(data.lastName)}, ${toUpper(data.firstName)} ${toUpper(data.middleName)}</div>
+                        <div class="summary-item" style="grid-column: 1 / -1;"><strong>Email:</strong> ${toUpper(data.email)}</div>
                     </div>
                 </div>
 
@@ -401,6 +403,7 @@
                     lastName: document.getElementById('lastName').value,
                     firstName: document.getElementById('firstName').value,
                     middleName: document.getElementById('middleName').value,
+                    email: document.getElementById('email').value,
                     address: document.getElementById('address').value,
                     barangay: document.getElementById('barangay').value,
                     city: document.getElementById('city').value,
