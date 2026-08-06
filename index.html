@@ -19,6 +19,49 @@ body{
     color:#333;
 }
 
+/* =======================
+   FULLSCREEN LOADER
+======================= */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.pulsing-logo {
+    width: 140px;
+    height: auto;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.92);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.92);
+        opacity: 0.5;
+    }
+}
+
+#loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
 /* Navigation */
 nav{
     background:#cb0404;
@@ -297,6 +340,11 @@ nav ul{
 
 <body>
 
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+    <img src="images/logo.png" alt="Loading..." class="pulsing-logo">
+</div>
+
 <nav>
 
 <h2>PLDT Northgem Application Portal</h2>
@@ -437,6 +485,14 @@ Kung BK Express ay ilagay ito sa landmark, halimbawa ay:
 </div>
 
 <script>
+
+// Hide Loading Overlay on Page Load
+window.addEventListener('load', function() {
+    const loader = document.getElementById('loading-screen');
+    if (loader) {
+        loader.classList.add('hidden');
+    }
+});
 
 function openApplyModal(){
     document.getElementById("applyModal").style.display="block";
