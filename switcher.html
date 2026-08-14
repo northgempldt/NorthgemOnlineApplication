@@ -174,7 +174,7 @@
             background: #fff;
             padding: 25px;
             border-radius: 10px;
-            max-width: 650px;
+            max-width: 500px;
             width: 100%;
             max-height: 85vh;
             overflow-y: auto;
@@ -212,22 +212,19 @@
             margin-bottom: 15px;
         }
 
-        .summary-section h3 {
-            color: #cb0404;
-            font-size: 15px;
-            margin: 10px 0 5px 0;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .summary-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px 15px;
-            font-size: 13px;
+        .summary-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 14px;
         }
 
         .summary-item {
             word-break: break-word;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #cb0404;
         }
 
         .summary-item strong {
@@ -248,8 +245,7 @@
         }
 
         @media(max-width:768px) {
-            .grid,
-            .summary-grid {
+            .grid {
                 grid-template-columns: 1fr;
             }
 
@@ -289,9 +285,9 @@
 
             <h2>Personal Information</h2>
             <div class="grid">
-                <div><label>Last Name</label><input id="lastName" required></div>
                 <div><label>First Name</label><input id="firstName" required></div>
                 <div><label>Middle Name</label><input id="middleName"></div>
+                <div><label>Last Name</label><input id="lastName" required></div>
                 <div><label>Email Address</label><input id="email" type="email" required></div>
             </div>
 
@@ -313,7 +309,7 @@
             <h2>Attachments</h2>
             <div class="attach">
                 <div class="upload-group">
-                    <label>Valid ID & SOA (Fornt ID, Back ID, Selfie with ID, and Selfie with SOA)</label>
+                    <label>Valid ID & SOA (Front ID, Back ID, Selfie with ID, and Selfie with SOA)</label>
                     <input id="idUpload" type="file" accept=".jpg,.jpeg,.png,.pdf" multiple>
                     <div id="idFileList" class="file-list"></div>
                 </div>
@@ -340,7 +336,7 @@
                 <p style="margin: 5px 0 0 0; color: #555;">Switcher application successfully submitted.</p>
             </div>
 
-            <div id="summaryDetails">
+            <div id="summaryDetails" class="summary-section">
                 <!-- Data dynamically inserted here -->
             </div>
 
@@ -355,14 +351,14 @@
         let idFilesArray = [];
         let supportFilesArray = [];
 
-        // File Selection Listener for ID Files Stack (No length limits)
+        // File Selection Listener for ID Files Stack
         document.getElementById('idUpload').addEventListener('change', function () {
             Array.from(this.files).forEach(file => idFilesArray.push(file));
-            this.value = ''; // Reset input to allow adding more sequentially
+            this.value = ''; // Reset input
             renderFileList('idFileList', idFilesArray, removeIdFile);
         });
 
-        // File Selection Listener for Supporting Files Stack (No length limits)
+        // File Selection Listener for Supporting Files Stack
         document.getElementById('supportUpload').addEventListener('change', function () {
             Array.from(this.files).forEach(file => supportFilesArray.push(file));
             this.value = ''; // Reset input
@@ -377,7 +373,7 @@
             fileArray.forEach((file, index) => {
                 const item = document.createElement('div');
                 item.className = 'file-item';
-                
+
                 const fileNameSpan = document.createElement('span');
                 fileNameSpan.textContent = `${index + 1}. ${file.name}`;
 
@@ -412,44 +408,30 @@
             reader.onerror = error => reject(error);
         });
 
-        // Display summary modal with uppercase values
+        // Display summary modal with ONLY Plan, Agent Name, and Full Name (First, Middle, Last)
         function showSummaryModal(data) {
             const container = document.getElementById('summaryDetails');
-            const toUpper = str => str ? String(str).toUpperCase() : 'N/A';
+            const toUpper = str => str ? String(str).trim().toUpperCase() : '';
+
+            // Construct Full Name: FIRST MIDDLE LAST
+            const fullNameParts = [
+                toUpper(data.firstName),
+                toUpper(data.middleName),
+                toUpper(data.lastName)
+            ].filter(Boolean); // Filters out blank strings if Middle Name is empty
+
+            const fullName = fullNameParts.join(' ');
 
             container.innerHTML = `
-                <div class="summary-section">
-                    <h3>Subscription Details</h3>
-                    <div class="summary-grid">
-                        <div class="summary-item"><strong>Plan:</strong> ${toUpper(data.plan)}</div>
-                        <div class="summary-item"><strong>Agent Name:</strong> ${toUpper(data.agentName)}</div>
+                <div class="summary-list">
+                    <div class="summary-item">
+                        <strong>Plan:</strong> ${toUpper(data.plan)}
                     </div>
-                </div>
-
-                <div class="summary-section">
-                    <h3>Personal Details</h3>
-                    <div class="summary-grid">
-                        <div class="summary-item" style="grid-column: 1 / -1;"><strong>Full Name:</strong> ${toUpper(data.lastName)}, ${toUpper(data.firstName)} ${toUpper(data.middleName)}</div>
-                        <div class="summary-item" style="grid-column: 1 / -1;"><strong>Email:</strong> ${toUpper(data.email)}</div>
+                    <div class="summary-item">
+                        <strong>Agent Name:</strong> ${toUpper(data.agentName)}
                     </div>
-                </div>
-
-                <div class="summary-section">
-                    <h3>Service Address</h3>
-                    <div class="summary-grid">
-                        <div class="summary-item" style="grid-column: 1 / -1;"><strong>Street/Address:</strong> ${toUpper(data.address)}</div>
-                        <div class="summary-item"><strong>Barangay:</strong> ${toUpper(data.barangay)}</div>
-                        <div class="summary-item"><strong>City:</strong> ${toUpper(data.city)}</div>
-                        <div class="summary-item"><strong>Province:</strong> ${toUpper(data.province)}</div>
-                        <div class="summary-item" style="grid-column: 1 / -1;"><strong>Landmark:</strong> ${toUpper(data.landmark)}</div>
-                    </div>
-                </div>
-
-                <div class="summary-section">
-                    <h3>Attachments</h3>
-                    <div class="summary-grid">
-                        <div class="summary-item"><strong>ID & Verification Files:</strong> ${data.idFiles.length} file(s) attached</div>
-                        <div class="summary-item"><strong>Supporting Files:</strong> ${data.supportFiles.length} file(s) attached</div>
+                    <div class="summary-item">
+                        <strong>Full Name:</strong> ${fullName || 'N/A'}
                     </div>
                 </div>
             `;
@@ -472,7 +454,7 @@
         }
 
         // Submit listener to process data and send to Apps Script
-        document.getElementById('appForm').addEventListener('submit', async function(e) {
+        document.getElementById('appForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
             const submitBtn = document.querySelector('.submit');
@@ -486,9 +468,9 @@
                 const formData = {
                     plan: document.getElementById('plan').value,
                     agentName: document.getElementById('agentName').value,
-                    lastName: document.getElementById('lastName').value,
                     firstName: document.getElementById('firstName').value,
                     middleName: document.getElementById('middleName').value,
+                    lastName: document.getElementById('lastName').value,
                     email: document.getElementById('email').value,
                     address: document.getElementById('address').value,
                     barangay: document.getElementById('barangay').value,
