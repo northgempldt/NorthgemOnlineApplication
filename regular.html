@@ -399,12 +399,53 @@
             renderFileList('supportFileList', supportFilesArray, removeSupportFile);
         }
 
-        // Convert file object to Base64 data URL
+        // Resizes and compresses image files before Base64 conversion to prevent payload overflow
         const fileToBase64 = file => new Promise((resolve, reject) => {
+            if (file.type === 'application/pdf') {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve({ name: file.name, data: reader.result });
+                reader.onerror = error => reject(error);
+                return;
+            }
+
+            const img = new Image();
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = () => resolve({ name: file.name, data: reader.result });
-            reader.onerror = error => reject(error);
+            reader.onload = e => {
+                img.src = e.target.result;
+            };
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const MAX_WIDTH = 1200;
+                const MAX_HEIGHT = 1200;
+                let width = img.width;
+                let height = img.height;
+
+                if (width > height) {
+                    if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                    }
+                } else {
+                    if (height > MAX_HEIGHT) {
+                        width *= MAX_HEIGHT / height;
+                        height = MAX_HEIGHT;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                resolve({
+                    name: file.name.replace(/\.[^/.]+$/, "") + ".jpg",
+                    data: compressedDataUrl
+                });
+            };
+            img.onerror = error => reject(error);
         });
 
         // Display summary modal styled like the target image with FIRST MIDDLE LAST name order
