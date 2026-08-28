@@ -485,16 +485,23 @@
                     supportFiles: supportFiles
                 };
 
-                await fetch(SCRIPT_URL, {
+                // Removed mode: 'no-cors' so JavaScript reads Google Apps Script's return payload
+                const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'text/plain'
                     },
                     body: JSON.stringify(formData)
                 });
 
-                showSummaryModal(formData);
+                const result = await response.json();
+
+                // Verification check against Google Script payload response
+                if (result.result === 'success' || result.status === 'success') {
+                    showSummaryModal(formData);
+                } else {
+                    alert('Submission error: ' + (result.error || result.message || 'Server error occurred.'));
+                }
 
             } catch (err) {
                 alert('An error occurred during submission: ' + err.message);
