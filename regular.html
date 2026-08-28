@@ -448,12 +448,11 @@
             img.onerror = error => reject(error);
         });
 
-        // Display summary modal styled like the target image with FIRST MIDDLE LAST name order
+        // Display summary modal styled like the target image
         function showSummaryModal(data) {
             const container = document.getElementById('summaryDetails');
             const toUpper = str => str ? String(str).trim().toUpperCase() : '';
 
-            // Construct Full Name: FIRST MIDDLE LAST
             const fullNameParts = [
                 toUpper(data.firstName),
                 toUpper(data.middleName),
@@ -492,7 +491,6 @@
         document.getElementById('appForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
-            // Ensure at least 1 file per section is attached
             if (idFilesArray.length === 0) {
                 alert('Please upload at least one Valid ID document.');
                 return;
@@ -526,16 +524,21 @@
                     supportFiles: supportFiles
                 };
 
-                await fetch(SCRIPT_URL, {
+                const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
                     headers: {
-                        'Content-Type': 'text/plain'
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: JSON.stringify(formData)
+                    body: new URLSearchParams({ data: JSON.stringify(formData) })
                 });
 
-                showSummaryModal(formData);
+                const result = await response.json();
+
+                if (result.result === 'success' || result.status === 'success') {
+                    showSummaryModal(formData);
+                } else {
+                    alert('Submission error: ' + (result.error || result.message || 'Server error occurred.'));
+                }
 
             } catch (err) {
                 alert('An error occurred during submission: ' + err.message);
