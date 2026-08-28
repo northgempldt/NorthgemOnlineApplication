@@ -155,7 +155,7 @@
             color: #fff;
         }
 
-        /* --- Custom Modal Popup Styling matching Regular Form Layout --- */
+        /* --- Custom Modal Popup Styling --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -407,7 +407,7 @@
             reader.onerror = error => reject(error);
         });
 
-        // Display summary modal styled like the target image with FIRST MIDDLE LAST name order
+        // Display summary modal styled with FIRST MIDDLE LAST name order
         function showSummaryModal(data) {
             const container = document.getElementById('summaryDetails');
             const toUpper = str => str ? String(str).trim().toUpperCase() : '';
