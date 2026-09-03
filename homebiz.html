@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Homebiz Application</title>
+    <link rel="icon" type="image/png" href="images/loogoo.png">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f8;
+            margin: 0;
+        }
+
+        header {
+            background: #cb0404;
+            color: #fff;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 25px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        h2 {
+            color: #cb0404;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 6px;
+        }
+
+        .attach {
+            border: 2px dashed #bbb;
+            padding: 18px;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .attach div.upload-group {
+            margin-bottom: 20px;
+        }
+
+        .attach div.upload-group:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Stacked File List Styles */
+        .file-list {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 8px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .file-item span {
+            word-break: break-all;
+            padding-right: 10px;
+        }
+
+        .remove-file-btn {
+            background: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 12px;
+            line-height: 1;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        button,
+        a.btn {
+            display: inline-block;
+            padding: 12px 22px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        .submit {
+            background: #cb0404;
+            color: #fff;
+        }
+
+        .reset {
+            background: #777;
+            color: #fff;
+        }
+
+        .home {
+            background: #0d6efd;
+            color: #fff;
+        }
+
+        /* --- Custom Modal Popup Styling matching Image Layout --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            max-width: 420px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 12px;
+        }
+
+        .modal-header h2 {
+            color: #28a745;
+            margin: 0;
+            border: none;
+            font-size: 28px;
+            font-weight: bold;
+            padding-bottom: 0;
+        }
+
+        .modal-header p {
+            margin: 8px 0 0 0;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .section-title {
+            color: #b30000;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 4px;
+        }
+
+        .detail-row {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .detail-row strong {
+            font-weight: bold;
+            color: #111;
+        }
+
+        .close-btn {
+            background: #28a745;
+            color: #ffffff;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .close-btn:hover {
+            background: #218838;
+        }
+
+        @media(max-width:768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>PLDT Northgem - Regular Application</h1>
+    </header>
+    <div class="container">
+        <form id="appForm">
+            <h2>Subscription</h2>
+            <div class="grid">
+                <div>
+                    <label>Plan</label>
+                    <select id="plan" required>
+                        <option value="">--Select Plan--</option>
+                        <option>Fiber Plan 999</option>
+                        <option>Fiber Unli Plan 1299</option>
+                        <option>Fiber Unli Plan 1699</option>
+                        <option>Fiber Unli Plan 2099</option>
+                        <option>Fiber Unli Plan 2699</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Agent Name</label>
+                    <input id="agentName" required>
+                </div>
+            </div>
+
+            <h2>Personal Information</h2>
+            <div class="grid">
+                <div><label>First Name</label><input id="firstName" required></div>
+                <div><label>Middle Name</label><input id="middleName"></div>
+                <div><label>Last Name</label><input id="lastName" required></div>
+                <div><label>Email Address</label><input id="email" type="email" required></div>
+            </div>
+
+            <h2>Complete Business Address</h2>
+            <div class="grid">
+                <div class="full">
+                    <label>Business Name / Street / Subdivision</label>
+                    <input id="address" required>
+                </div>
+                <div><label>Barangay</label><input id="barangay" required></div>
+                <div><label>City / Municipality</label><input id="city" required></div>
+                <div class="full"><label>Province</label><input id="province" required></div>
+                <div class="full">
+                    <label>Landmark/Time availability</label>
+                    <textarea id="landmark" rows="3" placeholder="Enter landmark details..."></textarea>
+                </div>
+            </div>
+
+            <h2>Attachments</h2>
+            <div class="attach">
+                <div class="upload-group">
+                    <label>Valid ID (Upload Front, Back, and Selfie with ID)</label>
+                    <input id="idUpload" type="file" accept=".jpg,.jpeg,.png" multiple>
+                    <div id="idFileList" class="file-list"></div>
+                </div>
+                <div class="upload-group">
+                    <label>Supporting Documents (CIS, Subcert, Cignal Consent, etc.)</label>
+                    <input id="supportUpload" type="file" accept=".jpg,.jpeg,.png" multiple>
+                    <div id="supportFileList" class="file-list"></div>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <a class="btn home" href="index.html">Back to Home</a>
+                <button class="submit" type="submit">Submit Application</button>
+                <button class="reset" type="reset">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Summary Modal Popup -->
+    <div id="summaryModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>✅</h2>
+                <h2>Success!</h2>
+                <p>HOMEBIZ Application submitted.</p>
+            </div>
+
+            <div id="summaryDetails">
+                <!-- Dynamic summary elements injected here -->
+            </div>
+
+            <button class="close-btn" onclick="closeSummaryModal()">Done</button>
+        </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzHG0az2SyZe_EYY8ZUUdo8POSuprJ5M0Rxn_lkRofsFcUKun5n7_lNSc0AS0xX2j7/exec';
+
+        // Global arrays to stack accumulative file objects
+        let idFilesArray = [];
+        let supportFilesArray = [];
+
+        // File Selection Listener for ID Files Stack
+        document.getElementById('idUpload').addEventListener('change', function () {
+            Array.from(this.files).forEach(file => idFilesArray.push(file));
+            this.value = ''; // Reset input
+            renderFileList('idFileList', idFilesArray, removeIdFile);
+        });
+
+        // File Selection Listener for Supporting Files Stack
+        document.getElementById('supportUpload').addEventListener('change', function () {
+            Array.from(this.files).forEach(file => supportFilesArray.push(file));
+            this.value = ''; // Reset input
+            renderFileList('supportFileList', supportFilesArray, removeSupportFile);
+        });
+
+        // Render stacked files UI list
+        function renderFileList(containerId, fileArray, removeCallback) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            fileArray.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+
+                const fileNameSpan = document.createElement('span');
+                fileNameSpan.textContent = `${index + 1}. ${file.name}`;
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'remove-file-btn';
+                removeBtn.innerHTML = '&#10005;';
+                removeBtn.onclick = () => removeCallback(index);
+
+                item.appendChild(fileNameSpan);
+                item.appendChild(removeBtn);
+                container.appendChild(item);
+            });
+        }
+
+        // Functions to remove individual files from stacks
+        function removeIdFile(index) {
+            idFilesArray.splice(index, 1);
+            renderFileList('idFileList', idFilesArray, removeIdFile);
+        }
+
+        function removeSupportFile(index) {
+            supportFilesArray.splice(index, 1);
+            renderFileList('supportFileList', supportFilesArray, removeSupportFile);
+        }
+
+        // Resizes and compresses image files before Base64 conversion to prevent payload overflow
+        const fileToBase64 = file => new Promise((resolve, reject) => {
+            if (file.type === 'application/pdf') {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve({ name: file.name, data: reader.result });
+                reader.onerror = error => reject(error);
+                return;
+            }
+
+            const img = new Image();
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = e => {
+                img.src = e.target.result;
+            };
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const MAX_WIDTH = 1200;
+                const MAX_HEIGHT = 1200;
+                let width = img.width;
+                let height = img.height;
+
+                if (width > height) {
+                    if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                    }
+                } else {
+                    if (height > MAX_HEIGHT) {
+                        width *= MAX_HEIGHT / height;
+                        height = MAX_HEIGHT;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                resolve({
+                    name: file.name.replace(/\.[^/.]+$/, "") + ".jpg",
+                    data: compressedDataUrl
+                });
+            };
+            img.onerror = error => reject(error);
+        });
+
+        // Display summary modal styled like the target image
+        function showSummaryModal(data) {
+            const container = document.getElementById('summaryDetails');
+            const toUpper = str => str ? String(str).trim().toUpperCase() : '';
+
+            const fullNameParts = [
+                toUpper(data.firstName),
+                toUpper(data.middleName),
+                toUpper(data.lastName)
+            ].filter(Boolean);
+
+            const fullName = fullNameParts.join(' ');
+
+            container.innerHTML = `
+                <div class="section-title">Subscription Details</div>
+                <div class="detail-row"><strong>Plan:</strong> ${toUpper(data.plan)}</div>
+                <div class="detail-row"><strong>Agent Name:</strong> ${toUpper(data.agentName)}</div>
+
+                <div class="section-title">Personal Details</div>
+                <div class="detail-row"><strong>Full Name:</strong> ${fullName || 'N/A'}</div>
+            `;
+
+            document.getElementById('summaryModal').style.display = 'flex';
+        }
+
+        // Reset form handling
+        document.getElementById('appForm').addEventListener('reset', function () {
+            idFilesArray = [];
+            supportFilesArray = [];
+            renderFileList('idFileList', idFilesArray, removeIdFile);
+            renderFileList('supportFileList', supportFilesArray, removeSupportFile);
+        });
+
+        // Close summary modal and reset form
+        function closeSummaryModal() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.getElementById('appForm').reset();
+        }
+
+        // Submit listener to process data and send to Apps Script
+        document.getElementById('appForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            if (idFilesArray.length === 0) {
+                alert('Please upload at least one Valid ID document.');
+                return;
+            }
+            if (supportFilesArray.length === 0) {
+                alert('Please upload at least one Supporting document.');
+                return;
+            }
+
+            const submitBtn = document.querySelector('.submit');
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Processing & Submitting...';
+
+            try {
+                const idFiles = await Promise.all(idFilesArray.map(fileToBase64));
+                const supportFiles = await Promise.all(supportFilesArray.map(fileToBase64));
+
+                const formData = {
+                    plan: document.getElementById('plan').value,
+                    agentName: document.getElementById('agentName').value,
+                    firstName: document.getElementById('firstName').value,
+                    middleName: document.getElementById('middleName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    address: document.getElementById('address').value,
+                    barangay: document.getElementById('barangay').value,
+                    city: document.getElementById('city').value,
+                    province: document.getElementById('province').value,
+                    landmark: document.getElementById('landmark').value,
+                    idFiles: idFiles,
+                    supportFiles: supportFiles
+                };
+
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({ data: JSON.stringify(formData) })
+                });
+
+                const result = await response.json();
+
+                if (result.result === 'success' || result.status === 'success') {
+                    showSummaryModal(formData);
+                } else {
+                    alert('Submission error: ' + (result.error || result.message || 'Server error occurred.'));
+                }
+
+            } catch (err) {
+                alert('An error occurred during submission: ' + err.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Submit Application';
+            }
+        });
+    </script>
+</body>
+
+</html>
