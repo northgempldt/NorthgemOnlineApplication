@@ -86,7 +86,6 @@
             margin-bottom: 0;
         }
 
-        /* Stacked File List Styles */
         .file-list {
             margin-top: 10px;
             display: flex;
@@ -154,7 +153,6 @@
             color: #fff;
         }
 
-        /* --- Custom Modal Popup Styling matching Image Layout --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -280,9 +278,7 @@
 
             <h2>Personal Information</h2>
             <div class="grid">
-                <div><label>First Name</label><input id="firstName" required></div>
-                <div><label>Middle Name</label><input id="middleName"></div>
-                <div><label>Last Name</label><input id="lastName" required></div>
+                <div><label>Full Name</label><input id="fullName" required placeholder="First Name Middle Name Last Name"></div>
                 <div><label>Email Address</label><input id="email" type="email" required></div>
             </div>
 
@@ -343,25 +339,21 @@
     <script>
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzHG0az2SyZe_EYY8ZUUdo8POSuprJ5M0Rxn_lkRofsFcUKun5n7_lNSc0AS0xX2j7/exec';
 
-        // Global arrays to stack accumulative file objects
         let idFilesArray = [];
         let supportFilesArray = [];
 
-        // File Selection Listener for ID Files Stack
         document.getElementById('idUpload').addEventListener('change', function () {
             Array.from(this.files).forEach(file => idFilesArray.push(file));
-            this.value = ''; // Reset input
+            this.value = '';
             renderFileList('idFileList', idFilesArray, removeIdFile);
         });
 
-        // File Selection Listener for Supporting Files Stack
         document.getElementById('supportUpload').addEventListener('change', function () {
             Array.from(this.files).forEach(file => supportFilesArray.push(file));
-            this.value = ''; // Reset input
+            this.value = '';
             renderFileList('supportFileList', supportFilesArray, removeSupportFile);
         });
 
-        // Render stacked files UI list
         function renderFileList(containerId, fileArray, removeCallback) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
@@ -385,7 +377,6 @@
             });
         }
 
-        // Functions to remove individual files from stacks
         function removeIdFile(index) {
             idFilesArray.splice(index, 1);
             renderFileList('idFileList', idFilesArray, removeIdFile);
@@ -396,7 +387,6 @@
             renderFileList('supportFileList', supportFilesArray, removeSupportFile);
         }
 
-        // Resizes and compresses image files before Base64 conversion to prevent payload overflow
         const fileToBase64 = file => new Promise((resolve, reject) => {
             if (file.type === 'application/pdf') {
                 const reader = new FileReader();
@@ -445,18 +435,9 @@
             img.onerror = error => reject(error);
         });
 
-        // Display summary modal styled like the target image
         function showSummaryModal(data) {
             const container = document.getElementById('summaryDetails');
             const toUpper = str => str ? String(str).trim().toUpperCase() : '';
-
-            const fullNameParts = [
-                toUpper(data.firstName),
-                toUpper(data.middleName),
-                toUpper(data.lastName)
-            ].filter(Boolean);
-
-            const fullName = fullNameParts.join(' ');
 
             container.innerHTML = `
                 <div class="section-title">Subscription Details</div>
@@ -464,13 +445,12 @@
                 <div class="detail-row"><strong>Agent Name:</strong> ${toUpper(data.agentName)}</div>
 
                 <div class="section-title">Personal Details</div>
-                <div class="detail-row"><strong>Full Name:</strong> ${fullName || 'N/A'}</div>
+                <div class="detail-row"><strong>Full Name:</strong> ${toUpper(data.fullName) || 'N/A'}</div>
             `;
 
             document.getElementById('summaryModal').style.display = 'flex';
         }
 
-        // Reset form handling
         document.getElementById('appForm').addEventListener('reset', function () {
             idFilesArray = [];
             supportFilesArray = [];
@@ -478,13 +458,11 @@
             renderFileList('supportFileList', supportFilesArray, removeSupportFile);
         });
 
-        // Close summary modal and reset form
         function closeSummaryModal() {
             document.getElementById('summaryModal').style.display = 'none';
             document.getElementById('appForm').reset();
         }
 
-        // Submit listener to process data and send to Apps Script
         document.getElementById('appForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
@@ -508,9 +486,7 @@
                 const formData = {
                     plan: document.getElementById('plan').value,
                     agentName: document.getElementById('agentName').value,
-                    firstName: document.getElementById('firstName').value,
-                    middleName: document.getElementById('middleName').value,
-                    lastName: document.getElementById('lastName').value,
+                    fullName: document.getElementById('fullName').value,
                     email: document.getElementById('email').value,
                     address: document.getElementById('address').value,
                     barangay: document.getElementById('barangay').value,
