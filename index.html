@@ -1,531 +1,545 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Northgem Application Form</title>
-<link rel="icon" type="image/png" href="images/loogoo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northgem Application Form</title>
+    <link rel="icon" type="image/png" href="images/loogoo.png">
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-body{
-    background:#f5f7fa;
-    color:#333;
-}
+        body {
+            background: #f5f7fa;
+            color: #333;
+        }
 
-/* =======================
+        /* =======================
    FULLSCREEN LOADER
 ======================= */
-#loading-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 99999;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
-}
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
 
-.pulsing-logo {
-    width: 140px;
-    height: auto;
-    animation: pulse 1.5s infinite ease-in-out;
-}
+        .pulsing-logo {
+            width: 140px;
+            height: auto;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
 
-@keyframes pulse {
-    0% {
-        transform: scale(0.92);
-        opacity: 0.5;
-    }
-    50% {
-        transform: scale(1.08);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(0.92);
-        opacity: 0.5;
-    }
-}
+        @keyframes pulse {
+            0% {
+                transform: scale(0.92);
+                opacity: 0.5;
+            }
 
-#loading-screen.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
+            50% {
+                transform: scale(1.08);
+                opacity: 1;
+            }
 
-/* Navigation */
-nav{
-    background:#cb0404;
-    color:white;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 8%;
-}
+            100% {
+                transform: scale(0.92);
+                opacity: 0.5;
+            }
+        }
 
-nav h2{
-    letter-spacing:1px;
-}
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
 
-nav ul{
-    display:flex;
-    list-style:none;
-}
+        /* Navigation */
+        nav {
+            background: #cb0404;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8%;
+        }
 
-nav ul li{
-    margin-left:25px;
-}
+        nav h3 {
+            letter-spacing: 1px;
+            font-weight: 800;
+            font-size: 18px;
+        }
 
-nav ul li a{
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
-    transition:.3s;
-}
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
 
-nav ul li a:hover{
-    color:#ffd43b;
-}
+        nav ul li {
+            margin-left: 25px;
+        }
 
-/* Hero */
-.hero{
-    height:85vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    background:linear-gradient(rgba(253,13,13,.8),rgba(213,134,134,.8)),
-    url("https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80");
-    background-size:cover;
-    background-position:center;
-    color:white;
-}
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: .3s;
+        }
 
-.hero-content{
-    max-width:700px;
-    padding:20px;
-}
+        nav ul li a:hover {
+            color: #ffd43b;
+        }
 
-/* Logo */
-.hero-logo{
-    width:140px;
-    height:140px;
-    object-fit:contain;
-    background:white;
-    border-radius:50%;
-    padding:12px;
-    margin-bottom:20px;
-    box-shadow:0 8px 20px rgba(0,0,0,.3);
-}
+        /* Hero */
+        .hero {
+            height: 85vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(253, 13, 13, .8), rgba(213, 134, 134, .8)),
+                url("images/lipa.png");
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
 
-.hero h1{
-    font-size:50px;
-    margin-bottom:20px;
-}
+        .hero-content {
+            max-width: 700px;
+            padding: 20px;
+        }
 
-.hero p{
-    font-size:18px;
-    margin-bottom:30px;
-    line-height:1.6;
-}
+        /* Logo */
+        .hero-logo {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+            background: white;
+            border-radius: 50%;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .3);
+        }
 
-/* Buttons */
+        .hero h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
 
-.btn{
-    display:inline-block;
-    padding:14px 30px;
-    border-radius:6px;
-    text-decoration:none;
-    font-weight:bold;
-    margin:10px;
-    transition:.3s;
-}
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
 
-.btn-primary{
-    background:#ffc107;
-    color:#000;
-}
+        /* Buttons */
 
-.btn-primary:hover{
-    background:#ffca2c;
-}
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px;
+            transition: .3s;
+        }
 
-/* Features */
+        .btn-primary {
+            background: #ffc107;
+            color: #000;
+        }
 
-.features{
-    padding:70px 8%;
-    text-align:center;
-}
+        .btn-primary:hover {
+            background: #ffca2c;
+        }
 
-.features h2{
-    margin-bottom:40px;
-    font-size:35px;
-    color:#cb0404;
-}
+        /* Features */
 
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-}
+        .features {
+            padding: 70px 8%;
+            text-align: center;
+        }
 
-.card{
-    background:white;
-    padding:30px;
-    border-radius:10px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-    transition:.3s;
-}
+        .features h2 {
+            margin-bottom: 40px;
+            font-size: 35px;
+            color: #cb0404;
+        }
 
-.card:hover{
-    transform:translateY(-8px);
-}
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
 
-.card h3{
-    color:#cb0404;
-    margin-bottom:15px;
-}
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+            transition: .3s;
+        }
 
-/* CTA */
+        .card:hover {
+            transform: translateY(-8px);
+        }
 
-.cta{
-    background:#cb0404;
-    color:white;
-    text-align:center;
-    padding:60px 20px;
-}
+        .card h3 {
+            color: #cb0404;
+            margin-bottom: 15px;
+        }
 
-.cta h2{
-    margin-bottom:20px;
-}
+        /* CTA */
 
-.cta p{
-    margin-bottom:20px;
-}
+        .cta {
+            background: #cb0404;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+        }
 
-/* Footer */
+        .cta h2 {
+            margin-bottom: 20px;
+        }
 
-footer{
-    background:#222;
-    color:#ddd;
-    text-align:center;
-    padding:20px;
-}
+        .cta p {
+            margin-bottom: 20px;
+        }
 
-/* =======================
+        /* Footer */
+
+        footer {
+            background: #222;
+            color: #ddd;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* =======================
    MODALS
 ======================= */
 
-.modal{
-    display:none;
-    position:fixed;
-    z-index:1000;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,.6);
-    animation:fade .3s;
-}
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .6);
+            animation: fade .3s;
+        }
 
-@keyframes fade{
-from{opacity:0;}
-to{opacity:1;}
-}
+        @keyframes fade {
+            from {
+                opacity: 0;
+            }
 
-.modal-content{
-    background:white;
-    width:90%;
-    max-width:450px;
-    margin:6% auto;
-    border-radius:10px;
-    padding:30px;
-    position:relative;
-    animation:zoom .3s;
-}
+            to {
+                opacity: 1;
+            }
+        }
 
-@keyframes zoom{
-from{
-transform:scale(.8);
-opacity:0;
-}
-to{
-transform:scale(1);
-opacity:1;
-}
-}
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 450px;
+            margin: 6% auto;
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+            animation: zoom .3s;
+        }
 
-.close{
-    position:absolute;
-    top:10px;
-    right:20px;
-    font-size:30px;
-    cursor:pointer;
-}
+        @keyframes zoom {
+            from {
+                transform: scale(.8);
+                opacity: 0;
+            }
 
-.close:hover{
-    color:red;
-}
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
 
-.modal h2{
-    color:#cb0404;
-    margin-bottom:20px;
-    text-align:center;
-}
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
 
-.popup-btn{
-    display:block;
-    text-decoration:none;
-    background:#cb0404;
-    color:white;
-    margin:15px 0;
-    padding:15px;
-    border-radius:8px;
-    text-align:center;
-    font-weight:bold;
-    transition:.3s;
-}
+        .close:hover {
+            color: red;
+        }
 
-.popup-btn:hover{
-    background:#980303;
-}
+        .modal h2 {
+            color: #cb0404;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-.requirements-list{
-    margin-top:20px;
-}
+        .popup-btn {
+            display: block;
+            text-decoration: none;
+            background: #cb0404;
+            color: white;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            transition: .3s;
+        }
 
-.requirements-list li{
-    margin:12px 0;
-    line-height:1.5;
-}
+        .popup-btn:hover {
+            background: #980303;
+        }
 
-/* Responsive */
+        .requirements-list {
+            margin-top: 20px;
+        }
 
-@media(max-width:768px){
+        .requirements-list li {
+            margin: 12px 0;
+            line-height: 1.5;
+        }
 
-nav{
-    flex-direction:column;
-}
+        /* Responsive */
 
-nav ul{
-    margin-top:15px;
-}
+        @media(max-width:768px) {
 
-.hero{
-    height:auto;
-    padding:60px 20px;
-}
+            nav {
+                flex-direction: column;
+            }
 
-.hero h1{
-    font-size:36px;
-}
+            nav ul {
+                margin-top: 15px;
+            }
 
-.hero-logo{
-    width:120px;
-    height:120px;
-}
+            .hero {
+                height: auto;
+                padding: 60px 20px;
+            }
 
-}
-</style>
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero-logo {
+                width: 120px;
+                height: 120px;
+            }
+
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- LOADING SCREEN -->
-<div id="loading-screen">
-    <img src="images/logo.png" alt="Loading..." class="pulsing-logo">
-</div>
+    <!-- LOADING SCREEN -->
+    <div id="loading-screen">
+        <img src="images/logo.png" alt="Loading..." class="pulsing-logo">
+    </div>
 
-<nav>
+    <nav>
 
-<h2>PLDT Northgem Application Portal</h2>
+        <h3>Northgem Application Portal</h3>
 
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="#" onclick="openRequirements()">Requirements</a></li>
-</ul>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#" onclick="openRequirements()">Requirements</a></li>
+        </ul>
 
-</nav>
+    </nav>
 
-<section class="hero">
+    <section class="hero">
 
-<div class="hero-content">
+        <div class="hero-content">
 
-<img src="images/logo.png" class="hero-logo">
+            <img src="images/logo.png" class="hero-logo">
 
-<h1>Online Application Form</h1>
+            <h1>Online Application Form</h1>
 
-<p>
-Submit your application quickly and securely.
-Complete the form and upload the required documents.
-</p>
+            <p>
+                Submit your TRADITIONAL application quickly and securely.
+                Complete the form and upload the required documents.
+            </p>
 
-<a href="#" class="btn btn-primary" onclick="openApplyModal()">Apply Now</a>
+            <a href="#" class="btn btn-primary" onclick="openApplyModal()">Apply Now</a>
 
-</div>
+        </div>
 
-</section>
+    </section>
 
-<section class="features">
+    <section class="features">
 
-<h2>Important Reminders!</h2>
+        <h2>Important Reminders!</h2>
 
-<div class="cards">
+        <div class="cards">
 
-<div class="card">
-<h3>📝 Application Form</h3>
-<p>
-Siguraduhing kumpleto ang mga detalye. Mangyaring i-double check ang lahat ng impormasyon bago isumite.
-</p>
-</div>
+            <div class="card">
+                <h3>📝 Application Form</h3>
+                <p>
+                    Siguraduhing kumpleto ang mga detalye. Mangyaring i-double check ang lahat ng impormasyon bago
+                    isumite.
+                </p>
+            </div>
 
-<div class="card">
-<h3>📁 Upload Documents</h3>
-<p>
-I-upload ang lahat ng importanteng documents tulad ng Front & Back ID, Customer Information Sheet, Subcerts, Cignal Consent Form, at iba pa.
-</p>
-</div>
+            <div class="card">
+                <h3>📁 Upload Documents</h3>
+                <p>
+                    I-upload ang lahat ng importanteng documents tulad ng Front & Back ID, Customer Information Sheet,
+                    Subcerts, Cignal Consent Form, at iba pa.
+                </p>
+            </div>
 
-<div class="card">
-<h3>📥 Submission</h3>
-<p>
-Ang application ay awtomatikong mapupunta sa monitoring system batay sa oras ng pagsusumite.
-</p>
-</div>
+            <div class="card">
+                <h3>📥 Submission</h3>
+                <p>
+                    Ang application ay awtomatikong mapupunta sa monitoring system batay sa oras ng pagsusumite.
+                </p>
+            </div>
 
-<div class="card">
-<h3>🚀 BK Express</h3>
-<p>
-Kung BK Express ay ilagay ito sa landmark, halimbawa ay:
-<strong>BKEXPRESS_Malapit sa Jollibee</strong>.
-</p>
-</div>
+            <div class="card">
+                <h3>🚀 BK Express</h3>
+                <p>
+                    Kung BK Express ay ilagay ito sa landmark, halimbawa ay:
+                    <strong>BKEXPRESS_Malapit sa Jollibee</strong>.
+                </p>
+            </div>
 
-</div>
+        </div>
 
-</section>
+    </section>
 
-<section class="cta">
+    <section class="cta">
 
-<h2>Ready to Start?</h2>
+        <h2>Ready to Start?</h2>
 
-<p>Begin your online application today.</p>
+        <p>Begin your online application today.</p>
 
-<a href="#" class="btn btn-primary" onclick="openApplyModal()">Start Application</a>
+        <a href="#" class="btn btn-primary" onclick="openApplyModal()">Start Application</a>
 
-</section>
+    </section>
 
-<footer>
+    <footer>
 
-<p>
-© 2026 Northgem Marketing Application Form System. All Rights Reserved.
-</p>
+        <p>
+            © 2026 Northgem Marketing Application Form System. All Rights Reserved.
+        </p>
 
-</footer>
+    </footer>
 
-<!-- APPLY MODAL -->
+    <!-- APPLY MODAL -->
 
-<div id="applyModal" class="modal">
+    <div id="applyModal" class="modal">
 
-<div class="modal-content">
+        <div class="modal-content">
 
-<span class="close" onclick="closeApplyModal()">&times;</span>
+            <span class="close" onclick="closeApplyModal()">&times;</span>
 
-<h2>Select Application Type</h2>
+            <h2>Select Application Type</h2>
 
-<a href="regular.html" class="popup-btn">Regular/HBBS</a>
+            <a href="regular.html" class="popup-btn">Regular/HBBS</a>
 
-<a href="switcher.html" class="popup-btn">Switcher</a>
+            <a href="switcher.html" class="popup-btn">Anticompetitor</a>
 
-<a href="homebiz.html" class="popup-btn">HomeBiz</a>
+            <a href="homebiz.html" class="popup-btn">HomeBiz</a>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
-<!-- REQUIREMENTS MODAL -->
+    <!-- REQUIREMENTS MODAL -->
 
-<div id="requirementsModal" class="modal">
+    <div id="requirementsModal" class="modal">
 
-<div class="modal-content">
+        <div class="modal-content">
 
-<span class="close" onclick="closeRequirements()">&times;</span>
+            <span class="close" onclick="closeRequirements()">&times;</span>
 
-<h2>Application Requirements</h2>
+            <h2>Application Requirements</h2>
 
-<ul class="requirements-list">
+            <ul class="requirements-list">
 
-<li>✅ Customer Information Sheet</li>
+                <li>✅ Customer Information Sheet</li>
 
-<li>✅ Valid ID (Front, Back, & Selfie)</li>
+                <li>✅ Valid ID (Front, Back, & Selfie)</li>
 
-<li>✅ Subcerts</li>
+                <li>✅ Subcerts</li>
 
-<li>✅ Cignal Consent Form (if with Cignal Cable)</li>
+                <li>✅ Cignal Consent Form (if with Cignal Cable)</li>
 
-<li>✅ Active Mobile Numbers</li>
+                <li>✅ Active Mobile Numbers</li>
 
-<li>✅ Complete Landmark</li>
+                <li>✅ Complete Landmark</li>
 
-<li>✅ SOA (if Switcher + Selfie with SOA)</li>
+                <li>✅ SOA (if Switcher + Selfie with SOA)</li>
 
-</ul>
+            </ul>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
-<script>
+    <script>
 
-// Hide Loading Overlay on Page Load
-window.addEventListener('load', function() {
-    const loader = document.getElementById('loading-screen');
-    if (loader) {
-        loader.classList.add('hidden');
-    }
-});
+        // Hide Loading Overlay on Page Load
+        window.addEventListener('load', function () {
+            const loader = document.getElementById('loading-screen');
+            if (loader) {
+                loader.classList.add('hidden');
+            }
+        });
 
-function openApplyModal(){
-    document.getElementById("applyModal").style.display="block";
-}
+        function openApplyModal() {
+            document.getElementById("applyModal").style.display = "block";
+        }
 
-function closeApplyModal(){
-    document.getElementById("applyModal").style.display="none";
-}
+        function closeApplyModal() {
+            document.getElementById("applyModal").style.display = "none";
+        }
 
-function openRequirements(){
-    document.getElementById("requirementsModal").style.display="block";
-}
+        function openRequirements() {
+            document.getElementById("requirementsModal").style.display = "block";
+        }
 
-function closeRequirements(){
-    document.getElementById("requirementsModal").style.display="none";
-}
+        function closeRequirements() {
+            document.getElementById("requirementsModal").style.display = "none";
+        }
 
-window.onclick=function(event){
+        window.onclick = function (event) {
 
-let apply=document.getElementById("applyModal");
-let req=document.getElementById("requirementsModal");
+            let apply = document.getElementById("applyModal");
+            let req = document.getElementById("requirementsModal");
 
-if(event.target==apply){
-apply.style.display="none";
-}
+            if (event.target == apply) {
+                apply.style.display = "none";
+            }
 
-if(event.target==req){
-req.style.display="none";
-}
+            if (event.target == req) {
+                req.style.display = "none";
+            }
 
-}
+        }
 
-</script>
+    </script>
 
 </body>
+
 </html>
