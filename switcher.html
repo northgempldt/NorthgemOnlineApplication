@@ -494,32 +494,41 @@
             submitBtn.innerText = 'Processing & Submitting...';
 
             try {
-                const firstName = document.getElementById('firstName').value.trim();
-                const middleName = document.getElementById('middleName').value.trim();
-                const lastName = document.getElementById('lastName').value.trim();
+                // Read and uppercase input values (except email)
+                const firstName = document.getElementById('firstName').value.trim().toUpperCase();
+                const middleName = document.getElementById('middleName').value.trim().toUpperCase();
+                const lastName = document.getElementById('lastName').value.trim().toUpperCase();
                 
-                // Keep original casing for email data sent to server
+                // Email retains original casing
                 const rawEmail = document.getElementById('email').value.trim();
-                
+
+                const plan = document.getElementById('plan').value.trim().toUpperCase();
+                const agentName = document.getElementById('agentName').value.trim().toUpperCase();
+                const address = document.getElementById('address').value.trim().toUpperCase();
+                const barangay = document.getElementById('barangay').value.trim().toUpperCase();
+                const city = document.getElementById('city').value.trim().toUpperCase();
+                const province = document.getElementById('province').value.trim().toUpperCase();
+                const landmark = document.getElementById('landmark').value.trim().toUpperCase();
+
                 const nameParts = [firstName, middleName, lastName].filter(part => part.length > 0);
-                const combinedFullName = nameParts.join(' ').toUpperCase();
+                const combinedFullName = nameParts.join(' ');
 
                 const idFiles = await Promise.all(idFilesArray.map(fileToBase64));
                 const supportFiles = await Promise.all(supportFilesArray.map(fileToBase64));
 
                 const formData = {
                     fullName: combinedFullName,
-                    plan: document.getElementById('plan').value,
-                    agentName: document.getElementById('agentName').value,
+                    plan: plan,
+                    agentName: agentName,
                     firstName: firstName,
                     middleName: middleName,
                     lastName: lastName,
-                    email: rawEmail,
-                    address: document.getElementById('address').value,
-                    barangay: document.getElementById('barangay').value,
-                    city: document.getElementById('city').value,
-                    province: document.getElementById('province').value,
-                    landmark: document.getElementById('landmark').value,
+                    email: rawEmail, // Kept in original case
+                    address: address,
+                    barangay: barangay,
+                    city: city,
+                    province: province,
+                    landmark: landmark,
                     idFiles: idFiles,
                     supportFiles: supportFiles
                 };
