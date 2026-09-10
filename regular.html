@@ -313,7 +313,7 @@
                     <div id="idFileList" class="file-list"></div>
                 </div>
                 <div class="upload-group">
-                    <label>Supporting Documents (CAF, Subcert, Cignal Consent, etc.)</label>
+                    <label>Supporting Documents (CIS, Subcert, Cignal Consent, etc.)</label>
                     <input id="supportUpload" type="file" accept=".jpg,.jpeg,.png" multiple>
                     <div id="supportFileList" class="file-list"></div>
                 </div>
@@ -331,8 +331,8 @@
     <div id="summaryModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>✅ Sakses!</h2>
-                <p>Application Submitted.</p>
+                <h2>✅ Submitted!</h2>
+                <p>Application successfully submitted.</p>
             </div>
 
             <div id="summaryDetails">
@@ -452,7 +452,7 @@
 
             const plan = (data.plan || '').toString().trim().toUpperCase();
             const agentName = (data.agentName || '').toString().trim().toUpperCase();
-            const fullName = (data.fullName || 'N/A').toString().trim().toUpperCase();
+            const fullName = (data.fullName || data.fullname || 'N/A').toString().trim().toUpperCase();
 
             container.innerHTML = `
                 <div class="section-title">Subscription Details</div>
@@ -495,7 +495,6 @@
             submitBtn.innerText = 'Processing & Submitting...';
 
             try {
-                // Compute summary modal full name logic directly prior to payload creation
                 const firstName = document.getElementById('firstName').value.trim();
                 const middleName = document.getElementById('middleName').value.trim();
                 const lastName = document.getElementById('lastName').value.trim();
@@ -508,12 +507,13 @@
 
                 const formData = {
                     fullName: combinedFullName,
+                    fullname: combinedFullName, // Keeps fallback key compatibility
                     plan: document.getElementById('plan').value,
                     agentName: document.getElementById('agentName').value,
                     firstName: firstName,
                     middleName: middleName,
                     lastName: lastName,
-                    email: document.getElementById('email').value,
+                    email: document.getElementById('email').value.trim(), // Exact case maintained
                     address: document.getElementById('address').value,
                     barangay: document.getElementById('barangay').value,
                     city: document.getElementById('city').value,
