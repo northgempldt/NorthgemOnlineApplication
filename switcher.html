@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Switcher Application</title>
     <link rel="icon" type="image/png" href="images/loogoo.png">
     <style>
@@ -35,8 +35,8 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
         }
 
         .full {
@@ -44,8 +44,8 @@
         }
 
         label {
-            display: block;
             font-weight: bold;
+            display: block;
             margin-bottom: 6px;
         }
 
@@ -60,7 +60,6 @@
         }
 
         textarea {
-            min-height: 80px;
             resize: vertical;
         }
 
@@ -127,22 +126,17 @@
             margin-top: 25px;
         }
 
-        .btn,
-        button {
+        button,
+        a.btn {
             display: inline-block;
             padding: 12px 22px;
             border: none;
             border-radius: 6px;
+            text-decoration: none;
             cursor: pointer;
             font-weight: bold;
-            font-size: 14px;
             margin: 5px;
-            text-decoration: none;
-        }
-
-        .home {
-            background: #0d6efd;
-            color: #fff;
+            font-size: 14px;
         }
 
         .submit {
@@ -155,7 +149,12 @@
             color: #fff;
         }
 
-        /* --- Custom Modal Popup Styling --- */
+        .home {
+            background: #0d6efd;
+            color: #fff;
+        }
+
+        /* Custom Modal Popup Styling */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -257,11 +256,11 @@
 
 <body>
     <header>
-        <h1>PLDT Northgem - Switcher Application</h1>
+        <h1>Switcher Application</h1>
     </header>
     <div class="container">
         <form id="appForm">
-            <h2>Subscription Details</h2>
+            <h2>Subscription</h2>
             <div class="grid">
                 <div>
                     <label>Plan</label>
@@ -285,7 +284,7 @@
             <h2>Personal Information</h2>
             <div class="grid">
                 <div><label>First Name</label><input id="firstName" required></div>
-                <div><label>Middle Name</label><input id="middleName"></div>
+                <div><label>Middle Name</label><input id="middleName" placeholder="LIKDANGAN kung wala..."></div>
                 <div><label>Last Name</label><input id="lastName" required></div>
                 <div><label>Email Address</label><input id="email" type="email" required></div>
             </div>
@@ -300,20 +299,20 @@
                 <div><label>City / Municipality</label><input id="city" required></div>
                 <div class="full"><label>Province</label><input id="province" required></div>
                 <div class="full">
-                    <label>Landmark/Time Availability</label>
-                    <textarea id="landmark" placeholder="Enter landmark details..."></textarea>
+                    <label>Landmark/Time availability</label>
+                    <textarea id="landmark" rows="3" placeholder="Enter landmark details..."></textarea>
                 </div>
             </div>
 
             <h2>Attachments</h2>
             <div class="attach">
                 <div class="upload-group">
-                    <label>Valid ID & SOA (Front ID, Back ID, Selfie with ID, and Selfie with SOA)</label>
+                    <label>Valid ID & SOA (Upload ID, Selfie with ID, Selfie with SOA/Modem)</label>
                     <input id="idUpload" type="file" accept=".jpg,.jpeg,.png" multiple>
                     <div id="idFileList" class="file-list"></div>
                 </div>
                 <div class="upload-group">
-                    <label>Supporting Documents including SOA</label>
+                    <label>Supporting Documents (SOA, CAF, Subcert, Cignal Consent)</label>
                     <input id="supportUpload" type="file" accept=".jpg,.jpeg,.png" multiple>
                     <div id="supportFileList" class="file-list"></div>
                 </div>
@@ -321,8 +320,8 @@
 
             <div class="buttons">
                 <a class="btn home" href="index.html">Back to Home</a>
-                <button type="submit" class="submit">Submit Application</button>
-                <button type="reset" class="reset">Reset</button>
+                <button class="submit" type="submit">Submit Application</button>
+                <button class="reset" type="reset">Reset</button>
             </div>
         </form>
     </div>
@@ -331,12 +330,12 @@
     <div id="summaryModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Submitted!✅</h2>
-                <p>Switcher application successfully submitted.</p>
+                <h2>✅ Sakses!</h2>
+                <p>Anticompetitor Application Submitted.</p>
             </div>
 
             <div id="summaryDetails">
-                <!-- Data dynamically inserted here -->
+                <!-- Dynamic summary details injected here -->
             </div>
 
             <button class="close-btn" onclick="closeSummaryModal()">Done</button>
@@ -344,27 +343,25 @@
     </div>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynHHA0VYmn0xg3dSd0PMzY3B3rv6zGptVTxcNMSqeGKiZoeHnLO1Fe077hv1C-Ce4H/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbvnWikB2Dkh0_PEhEvQu_nX2BGQIx5MbcF4OcD2gMSw-Nr8kuR9pAHN1yhfBCkxvW/exec';
 
-        // Global arrays to stack accumulative file objects
         let idFilesArray = [];
         let supportFilesArray = [];
 
-        // File Selection Listener for ID Files Stack
+        // Stack files for ID input
         document.getElementById('idUpload').addEventListener('change', function () {
             Array.from(this.files).forEach(file => idFilesArray.push(file));
-            this.value = ''; // Reset input
+            this.value = '';
             renderFileList('idFileList', idFilesArray, removeIdFile);
         });
 
-        // File Selection Listener for Supporting Files Stack
+        // Stack files for Support input
         document.getElementById('supportUpload').addEventListener('change', function () {
             Array.from(this.files).forEach(file => supportFilesArray.push(file));
-            this.value = ''; // Reset input
+            this.value = '';
             renderFileList('supportFileList', supportFilesArray, removeSupportFile);
         });
 
-        // Render stacked files UI list
         function renderFileList(containerId, fileArray, removeCallback) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
@@ -388,7 +385,6 @@
             });
         }
 
-        // Functions to remove individual files from stacks
         function removeIdFile(index) {
             idFilesArray.splice(index, 1);
             renderFileList('idFileList', idFilesArray, removeIdFile);
@@ -399,41 +395,76 @@
             renderFileList('supportFileList', supportFilesArray, removeSupportFile);
         }
 
-        // Convert file object to Base64 data URL
         const fileToBase64 = file => new Promise((resolve, reject) => {
             const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve({ name: file.name, data: reader.result });
+
+            if (file.type === 'application/pdf') {
+                reader.onload = () => resolve({ name: file.name, data: reader.result });
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+                return;
+            }
+
+            reader.onload = e => {
+                const img = new Image();
+
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 1000;
+                    const MAX_HEIGHT = 1000;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.6);
+                    resolve({
+                        name: file.name.replace(/\.[^/.]+$/, "") + ".jpg",
+                        data: compressedDataUrl
+                    });
+                };
+                img.onerror = error => reject(error);
+                img.src = e.target.result;
+            };
             reader.onerror = error => reject(error);
+            reader.readAsDataURL(file);
         });
 
-        // Display summary modal styled with FIRST MIDDLE LAST name order
+        // Generates the popup details using pre-calculated fullName
         function showSummaryModal(data) {
             const container = document.getElementById('summaryDetails');
-            const toUpper = str => str ? String(str).trim().toUpperCase() : '';
 
-            // Construct Full Name: FIRST MIDDLE LAST
-            const fullNameParts = [
-                toUpper(data.firstName),
-                toUpper(data.middleName),
-                toUpper(data.lastName)
-            ].filter(Boolean); // Filters out blank strings if Middle Name is empty
-
-            const fullName = fullNameParts.join(' ');
+            const plan = (data.plan || '').toString().trim().toUpperCase();
+            const agentName = (data.agentName || '').toString().trim().toUpperCase();
+            const fullName = (data.fullName || 'N/A').toString().trim().toUpperCase();
 
             container.innerHTML = `
                 <div class="section-title">Subscription Details</div>
-                <div class="detail-row"><strong>Plan:</strong> ${toUpper(data.plan)}</div>
-                <div class="detail-row"><strong>Agent Name:</strong> ${toUpper(data.agentName)}</div>
+                <div class="detail-row"><strong>Plan:</strong> ${plan}</div>
+                <div class="detail-row"><strong>Agent Name:</strong> ${agentName}</div>
 
                 <div class="section-title">Personal Details</div>
-                <div class="detail-row"><strong>Full Name:</strong> ${fullName || 'N/A'}</div>
+                <div class="detail-row"><strong>Full Name:</strong> ${fullName}</div>
             `;
 
             document.getElementById('summaryModal').style.display = 'flex';
         }
 
-        // Reset form handling
         document.getElementById('appForm').addEventListener('reset', function () {
             idFilesArray = [];
             supportFilesArray = [];
@@ -441,19 +472,16 @@
             renderFileList('supportFileList', supportFilesArray, removeSupportFile);
         });
 
-        // Close summary modal and reset form
         function closeSummaryModal() {
             document.getElementById('summaryModal').style.display = 'none';
             document.getElementById('appForm').reset();
         }
 
-        // Submit listener to process data and send to Apps Script
         document.getElementById('appForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
-            // Ensure at least 1 file per section is attached
             if (idFilesArray.length === 0) {
-                alert('Please upload at least one Valid ID & SOA document.');
+                alert('Please upload at least one Valid ID document.');
                 return;
             }
             if (supportFilesArray.length === 0) {
@@ -466,15 +494,24 @@
             submitBtn.innerText = 'Processing & Submitting...';
 
             try {
+                // Compute summary modal full name logic directly prior to payload creation
+                const firstName = document.getElementById('firstName').value.trim();
+                const middleName = document.getElementById('middleName').value.trim();
+                const lastName = document.getElementById('lastName').value.trim();
+                
+                const nameParts = [firstName, middleName, lastName].filter(part => part.length > 0);
+                const combinedFullName = nameParts.join(' ').toUpperCase();
+
                 const idFiles = await Promise.all(idFilesArray.map(fileToBase64));
                 const supportFiles = await Promise.all(supportFilesArray.map(fileToBase64));
 
                 const formData = {
+                    fullName: combinedFullName,
                     plan: document.getElementById('plan').value,
                     agentName: document.getElementById('agentName').value,
-                    firstName: document.getElementById('firstName').value,
-                    middleName: document.getElementById('middleName').value,
-                    lastName: document.getElementById('lastName').value,
+                    firstName: firstName,
+                    middleName: middleName,
+                    lastName: lastName,
                     email: document.getElementById('email').value,
                     address: document.getElementById('address').value,
                     barangay: document.getElementById('barangay').value,
@@ -485,23 +522,18 @@
                     supportFiles: supportFiles
                 };
 
-                // Removed mode: 'no-cors' so JavaScript reads Google Apps Script's return payload
-                const response = await fetch(SCRIPT_URL, {
+                const payload = 'data=' + encodeURIComponent(JSON.stringify(formData));
+
+                await fetch(SCRIPT_URL, {
                     method: 'POST',
+                    mode: 'no-cors',
                     headers: {
-                        'Content-Type': 'text/plain'
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: JSON.stringify(formData)
+                    body: payload
                 });
 
-                const result = await response.json();
-
-                // Verification check against Google Script payload response
-                if (result.result === 'success' || result.status === 'success') {
-                    showSummaryModal(formData);
-                } else {
-                    alert('Submission error: ' + (result.error || result.message || 'Server error occurred.'));
-                }
+                showSummaryModal(formData);
 
             } catch (err) {
                 alert('An error occurred during submission: ' + err.message);
