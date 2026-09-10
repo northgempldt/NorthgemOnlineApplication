@@ -335,7 +335,7 @@
             </div>
 
             <div id="summaryDetails">
-                <!-- Dynamic summary details injected here -->
+                <!-- Dynamic summary details injected here without email -->
             </div>
 
             <button class="close-btn" onclick="closeSummaryModal()">Done</button>
@@ -445,7 +445,7 @@
             reader.readAsDataURL(file);
         });
 
-        // Generates the popup details using pre-calculated fullName
+        // Generates popup details excluding email
         function showSummaryModal(data) {
             const container = document.getElementById('summaryDetails');
 
@@ -494,10 +494,12 @@
             submitBtn.innerText = 'Processing & Submitting...';
 
             try {
-                // Compute summary modal full name logic directly prior to payload creation
                 const firstName = document.getElementById('firstName').value.trim();
                 const middleName = document.getElementById('middleName').value.trim();
                 const lastName = document.getElementById('lastName').value.trim();
+                
+                // Keep original casing for email data sent to server
+                const rawEmail = document.getElementById('email').value.trim();
                 
                 const nameParts = [firstName, middleName, lastName].filter(part => part.length > 0);
                 const combinedFullName = nameParts.join(' ').toUpperCase();
@@ -512,7 +514,7 @@
                     firstName: firstName,
                     middleName: middleName,
                     lastName: lastName,
-                    email: document.getElementById('email').value,
+                    email: rawEmail,
                     address: document.getElementById('address').value,
                     barangay: document.getElementById('barangay').value,
                     city: document.getElementById('city').value,
