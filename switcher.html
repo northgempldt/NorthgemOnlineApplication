@@ -299,8 +299,8 @@
                 <div><label>City / Municipality</label><input id="city" required></div>
                 <div class="full"><label>Province</label><input id="province" required></div>
                 <div class="full">
-                    <label>Landmark/Time availability</label>
-                    <textarea id="landmark" rows="3" placeholder="Enter landmark details..."></textarea>
+                    <label>Landmark|Remarks (No Call Out/Call time Availability)</label>
+                    <textarea id="landmark" rows="3" placeholder="Ex. Brgy. Hall / No Call Out..."></textarea>
                 </div>
             </div>
 
@@ -454,12 +454,12 @@
             const fullName = (data.fullName || 'N/A').toString().trim().toUpperCase();
 
             container.innerHTML = `
-                <div class="section-title">Subscription Details</div>
+                <div class="section-title">Application Details</div>
                 <div class="detail-row"><strong>Plan:</strong> ${plan}</div>
                 <div class="detail-row"><strong>Agent Name:</strong> ${agentName}</div>
 
-                <div class="section-title">Personal Details</div>
-                <div class="detail-row"><strong>Full Name:</strong> ${fullName}</div>
+                <div class="section-title">Subs. Name</div>
+                <div class="detail-row">${fullName}</div>
             `;
 
             document.getElementById('summaryModal').style.display = 'flex';
